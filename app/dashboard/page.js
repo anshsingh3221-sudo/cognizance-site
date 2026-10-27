@@ -41,9 +41,10 @@ export default function Dashboard() {
   if (!user) return <main className="authpage"><p className="msg">Loading...</p></main>;
 
   const meta = user.user_metadata ?? {};
-  const name = meta.full_name ?? user.email?.split('@')[0] ?? 'Welcome';
-  const photo = meta.avatar_url ?? meta.picture;
-  const contact = user.email ?? (user.phone ? `+${user.phone.replace(/^\+/, '')}` : '');
+     const phoneNum = user.phone ? `+${user.phone.replace(/^\+/, '')}` : '';
+   const name = meta.full_name || user.email?.split('@')[0] || 'Welcome';
+   const photo = meta.avatar_url || meta.picture;
+   const contact = user.email || phoneNum;
   const verified = !!(user.email_confirmed_at || user.phone_confirmed_at);
 
   return (
