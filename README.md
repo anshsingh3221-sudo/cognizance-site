@@ -2,7 +2,11 @@
 
 A practice event-registration website for a college tech fest, built as part of my application for the web development article at Cognizance, IIT Roorkee. It is not the official fest website.
 
-**Live site:** [paste your Vercel link here]
+**Live site:** 
+![Home page](screenshots/home.png)
+![Dashboard](screenshots/dashboard.png)
+![login page](screenshots/login.png)
+
 
 ## Features
 
