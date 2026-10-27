@@ -10,6 +10,7 @@ export default function Dashboard() {
   const [user, setUser] = useState(null);
   const [mine, setMine] = useState([]);
   const [note, setNote] = useState('');
+  const [busy, setBusy] = useState('');
 
   async function load() {
     const { data } = await supabase.from('registrations').select('event');
@@ -24,30 +25,40 @@ export default function Dashboard() {
   }, [router]);
 
   async function toggle(title) {
+    if (busy) return;
     setNote('');
-    if (mine.includes(title)) {
-      const { error } = await supabase.from('registrations').delete().eq('event', title);
-      if (error) return setNote(error.message);
-    } else {
-      const { error } = await supabase.from('registrations').insert({ event: title });
-      if (error) return setNote(error.message);
-    }
+    setBusy(title);
+    const { error } = mine.includes(title)
+      ? await supabase.from('registrations').delete().eq('event', title)
+      : await supabase.from('registrations').insert({ event: title });
+    setBusy('');
+    if (error) return setNote(error.message);
     load();
   }
 
   async function signOut() { await supabase.auth.signOut(); router.replace('/'); }
 
   if (!user) return <main className="authpage"><p className="msg">Loading...</p></main>;
-  const verified = !!user.email_confirmed_at;
+
+  const meta = user.user_metadata ?? {};
+  const name = meta.full_name ?? user.email?.split('@')[0] ?? 'Welcome';
+  const photo = meta.avatar_url ?? meta.picture;
+  const contact = user.email ?? (user.phone ? `+${user.phone.replace(/^\+/, '')}` : '');
+  const verified = !!(user.email_confirmed_at || user.phone_confirmed_at);
 
   return (
     <>
       <Nav />
       <main className="wrap dash">
         <div className="dashhead">
-          <div>
-            <h1>{user.user_metadata?.full_name ?? 'Welcome'}</h1>
-            <p className="lead">{user.email} <span className={verified ? 'badge ok' : 'badge'}>{verified ? 'Email verified' : 'Not verified'}</span></p>
+          <div className="who">
+            {photo
+              ? <img className="avatar" src={photo} alt="" referrerPolicy="no-referrer" />
+              : <div className="avatar initial" aria-hidden="true">{name[0].toUpperCase()}</div>}
+            <div>
+              <h1>{name}</h1>
+              <p className="lead">{contact} <span className={verified ? 'badge ok' : 'badge'}>{verified ? 'Verified' : 'Not verified'}</span></p>
+            </div>
           </div>
           <button className="btn ghost" onClick={signOut}>Sign out</button>
         </div>
@@ -61,8 +72,12 @@ export default function Dashboard() {
                 <div className="icon" aria-hidden="true">{e.icon}</div>
                 <h3>{e.title}</h3>
                 <p>{e.text}</p>
-                <button className={on ? 'btn ghost small' : 'btn small'} onClick={() => toggle(e.title)}>
-                  {on ? 'Cancel registration' : 'Register'}
+                <button
+                  className={on ? 'btn ghost small' : 'btn small'}
+                  onClick={() => toggle(e.title)}
+                  disabled={!!busy}
+                >
+                  {busy === e.title ? 'Saving...' : on ? 'Cancel registration' : 'Register'}
                 </button>
               </article>
             );
