@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Nav from '../components/Nav';
 import Sky from '../components/Sky';
+import Footer from '../components/Footer';
 import { EVENTS, FEST_DATE } from '../lib/events';
 
 const pad = (n) => String(n).padStart(2, '0');
@@ -101,6 +102,28 @@ export default function Home() {
         </div>
       </section>
 
+      <section id="faq">
+        <div className="wrap">
+          <h2>Questions</h2>
+          <p className="lead">Quick answers before you register.</p>
+          <div className="faq">
+            {[
+              ['How do I register?', 'Click Register or sign in, log in with Google, email or phone, then choose events from your dashboard.'],
+              ['Can I register for more than one event?', 'Yes. Register for as many as you like, and cancel any of them from the dashboard.'],
+              ['Does it cost anything?', 'This is a practice build, so nothing is charged. Fees for the real fest will be announced separately.'],
+              ['I did not get my OTP. What now?', 'Wait a minute, check spam if you used email, then try again. You can also use Google sign-in instead.'],
+              ['Can I change my details later?', 'Yes. Use the Edit button in the Your details section on your dashboard.'],
+              ['Is this the official Cognizance site?', 'No. It is an independent practice project and not affiliated with the official fest.'],
+            ].map(([q, a]) => (
+              <details key={q}>
+                <summary>{q}</summary>
+                <p>{a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section id="join">
         <div className="wrap finalcta">
           <h2>Ready to take off?</h2>
@@ -109,12 +132,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer>
-        <div className="wrap foot">
-          <span>Cognizance practice site. Not the official website.</span>
-          <span>Built with Next.js and Supabase</span>
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }

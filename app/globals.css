@@ -146,3 +146,14 @@ html { scroll-behavior: smooth; }
 .atable th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.7; white-space: nowrap; }
 .atable tr:last-child td { border-bottom: 0; }
 .chip { display: inline-block; margin: 0 6px 6px 0; padding: 2px 10px; border-radius: 999px; font-size: 12px; border: 1px solid rgba(201,169,106,0.6); color: #c9a96a; }
+.footlinks { display: flex; gap: 18px; flex-wrap: wrap; }
+.footlinks a { opacity: 0.8; }
+.footlinks a:hover { opacity: 1; color: #c9a96a; }
+.faq { display: grid; gap: 10px; max-width: 760px; margin-top: 20px; }
+.faq details { padding: 14px 18px; border-radius: 12px; border: 1px solid rgba(127,127,127,0.25); background: rgba(127,127,127,0.06); }
+.faq summary { cursor: pointer; font-weight: 600; }
+.faq details[open] summary { color: #c9a96a; margin-bottom: 8px; }
+.faq p { margin: 0; opacity: 0.85; }
+.legal { max-width: 760px; padding-top: 110px; padding-bottom: 60px; }
+.legal h2 { margin-top: 28px; font-size: 22px; }
+.legal p { line-height: 1.7; opacity: 0.9; }
