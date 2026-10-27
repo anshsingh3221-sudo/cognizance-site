@@ -1,51 +1,34 @@
-# Cognizance practice site (Next.js + Supabase)
+# Cognizance Event Registration Site
 
-Landing page, email OTP sign-in, Google sign-in, and an event registration dashboard.
+A practice event-registration website for a college tech fest, built as part of my application for the web development article at Cognizance, IIT Roorkee. It is not the official fest website.
 
-## 1. Run it locally
+**Live site:** [paste your Vercel link here]
 
-```bash
-npm install
-cp .env.local.example .env.local      # then fill in the two values (step 2)
-npm run dev                           # http://localhost:3000
-```
+## Features
 
-## 2. Create the Supabase project (free)
+- Home page with a live countdown, event categories and a 3-day schedule
+- Sign in with Google, email OTP, or phone OTP
+- Personal dashboard showing your name, photo and verification status
+- Register for or cancel events, saved per user in a database
+- Fully responsive layout (works on phones)
 
-1. Go to supabase.com, create a project.
-2. Project Settings > API: copy the **Project URL** and the **anon public key** into `.env.local`.
-3. SQL Editor: paste and run `supabase/schema.sql`. This creates the registrations table with row-level security, so each user can only see and edit their own rows.
+## Tech stack
 
-## 3. Turn on email OTP (6-digit code)
+- **Next.js** (React) for the frontend
+- **Supabase** for authentication and the Postgres database
+- **Vercel** for hosting
 
-1. Authentication > Providers > Email: keep it enabled.
-2. Authentication > Email Templates: edit **both** "Magic Link" and "Confirm signup" (new users get the second one). Replace the body with:
+## Run it locally
 
-```html
-<h2>Your Cognizance code</h2>
-<p>Enter this 6-digit code to continue:</p>
-<h1>{{ .Token }}</h1>
-```
-
-Without `{{ .Token }}` in the template, Supabase sends a link instead of a code.
-
-## 4. Turn on Google sign-in
-
-1. Google Cloud Console > APIs & Services > Credentials > Create credentials > OAuth client ID > Web application.
-2. Authorized redirect URI: `https://YOUR-PROJECT-REF.supabase.co/auth/v1/callback`
-3. Copy the Client ID and Client Secret.
-4. Supabase > Authentication > Providers > Google: enable it and paste both values.
-5. Supabase > Authentication > URL Configuration:
-   - Site URL: `http://localhost:3000`
-   - Redirect URLs: add `http://localhost:3000/dashboard`
-   (Add your deployed URL here too, e.g. your Vercel link.)
-
-## 5. Deploy
-
-Push to GitHub, import the repo on Vercel, add the two environment variables, deploy, then add the Vercel URL to Supabase's URL Configuration.
+1. Clone the repo and run `npm install`
+2. Copy `.env.local.example` to `.env.local` and add your own Supabase URL and anon key
+3. Run `npm run dev` and open http://localhost:3000
 
 ## Notes
 
-- Supabase's built-in email sender allows only a few emails per hour. For real use, add custom SMTP (Resend, Brevo) under Authentication > SMTP Settings.
-- Google accounts are already email-verified. OTP users become verified when they enter the code. The dashboard shows this as a badge.
-- Project layout: `app/` pages, `components/` shared UI, `lib/` Supabase client and event data, `supabase/` SQL.
+- Phone login uses Supabase test phone numbers for demonstration. Sending real SMS needs an SMS provider such as Twilio.
+- Database access is protected with Supabase row-level security, so users only see their own registrations.
+
+## What I learned
+
+I learned from this project that how to align supabase parallel to google login or phone login, how to launch my web for all devices using vercel.
