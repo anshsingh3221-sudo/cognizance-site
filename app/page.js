@@ -23,7 +23,12 @@ function useCountdown(date) {
 
 export default function Home() {
   const t = useCountdown(FEST_DATE);
-  const units = t ? [[t.days, 'days'], [t.h, 'hours'], [t.m, 'minutes'], [t.s, 'seconds']] : [];
+  const units = [
+    [t ? pad(t.days) : '--', 'days'],
+    [t ? pad(t.h) : '--', 'hours'],
+    [t ? pad(t.m) : '--', 'minutes'],
+    [t ? pad(t.s) : '--', 'seconds'],
+  ];
 
   return (
     <>
@@ -36,10 +41,10 @@ export default function Home() {
           <h1>Where ideas<br />leave orbit</h1>
           <p className="sub">Three days of competitions, workshops and talks, run by students for anyone who likes building things.</p>
           <div className="count">
-            {units.map(([v, l]) => <div key={l}><b>{pad(v)}</b><small>{l}</small></div>)}
+            {units.map(([v, l]) => <div key={l}><b>{v}</b><small>{l}</small></div>)}
           </div>
           <div className="cta">
-            <Link className="btn" href="/login">Register with email or Google</Link>
+            <Link className="btn" href="/login">Register or sign in</Link>
             <a className="btn ghost" href="#events">Browse events</a>
           </div>
         </div>
@@ -48,14 +53,14 @@ export default function Home() {
       <section id="about">
         <div className="wrap about">
           <div>
-            <h2>A student-run fest that keeps growing</h2>
-            <p className="lead">Started in 2003 as a hobbies club project, the fest now brings thousands of students together to compete, learn and ship. This is a practice build: replace the copy with your own.</p>
+            <h2>One place to join the fest</h2>
+            <p className="lead">Sign in, pick the events you want, and manage every registration from a single dashboard. Cancel or change your mind anytime.</p>
           </div>
           <div className="stats">
-            <div><b>20+</b><span>Years running</span></div>
-            <div><b>200+</b><span>Events and talks</span></div>
-            <div><b>1000+</b><span>Colleges reached</span></div>
             <div><b>3</b><span>Days on campus</span></div>
+            <div><b>{EVENTS.length}</b><span>Event categories</span></div>
+            <div><b>1 min</b><span>To register</span></div>
+            <div><b>IITR</b><span>Roorkee campus</span></div>
           </div>
         </div>
       </section>
@@ -96,10 +101,18 @@ export default function Home() {
         </div>
       </section>
 
+      <section id="join">
+        <div className="wrap finalcta">
+          <h2>Ready to take off?</h2>
+          <p className="lead">Create your account and lock in your events.</p>
+          <Link className="btn" href="/login">Get started</Link>
+        </div>
+      </section>
+
       <footer>
         <div className="wrap foot">
           <span>Cognizance practice site. Not the official website.</span>
-          <span>Next.js and Supabase</span>
+          <span>Built with Next.js and Supabase</span>
         </div>
       </footer>
     </>

@@ -109,3 +109,7 @@ input:focus{border-color:var(--gold);outline:none}
 .avatar { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
 .avatar.initial { display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; background: #e5e7eb; color: #111; }
 button:disabled { opacity: 0.6; cursor: not-allowed; }
+html { scroll-behavior: smooth; }
+.finalcta { text-align: center; padding: 64px 0; }
+.finalcta .btn { margin-top: 16px; display: inline-block; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
