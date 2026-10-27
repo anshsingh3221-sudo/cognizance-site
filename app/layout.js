@@ -5,10 +5,18 @@ const display = Cormorant_Garamond({ subsets: ['latin'], weight: ['500', '600', 
 const body = Manrope({ subsets: ['latin'], variable: '--f-body' });
 
 export const metadata = {
-  title: 'Cognizance: practice fest site',
-  description: 'A student-built tech fest website with email OTP and Google sign-in.'
+  metadataBase: new URL('https://cognizance-site.vercel.app'),
+  title: {
+    default: 'Cognizance Registration',
+    template: '%s | Cognizance',
+  },
+  description: 'Sign in with Google, email or phone, then register for events from one dashboard. A practice build for Cognizance, IIT Roorkee.',
+  openGraph: {
+    title: 'Cognizance Registration',
+    description: 'Sign in and register for events from one dashboard.',
+    type: 'website',
+  },
 };
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${display.variable} ${body.variable}`}>
